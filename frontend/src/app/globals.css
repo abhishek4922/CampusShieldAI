@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Design Tokens ──────────────────────────────────────── */
+:root {
+  --bg-primary:    #000d24;
+  --bg-secondary:  #011a42;
+  --bg-card:       rgba(2, 44, 102, 0.6);
+  --bg-card-hover: rgba(4, 64, 133, 0.7);
+  --border:        rgba(6, 182, 212, 0.15);
+  --border-hover:  rgba(6, 182, 212, 0.4);
+  --text-primary:  #f0f9ff;
+  --text-muted:    #94a3b8;
+  --teal:          #06b6d4;
+  --teal-glow:     rgba(6, 182, 212, 0.3);
+}
+
+/* ── Base ───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--bg-primary);
+  background-image:
+    radial-gradient(ellipse at 20% 0%, rgba(6,182,212,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 100%, rgba(9,112,212,0.08) 0%, transparent 60%);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Components ─────────────────────────────────────────── */
+@layer components {
+  /* Glassmorphism card */
+  .glass-card {
+    @apply rounded-2xl border backdrop-blur-md;
+    background: var(--bg-card);
+    border-color: var(--border);
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  }
+  .glass-card:hover {
+    border-color: var(--border-hover);
+    box-shadow: 0 0 32px var(--teal-glow);
+    transform: translateY(-2px);
+  }
+
+  /* Primary button */
+  .btn-primary {
+    @apply px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200;
+    background: linear-gradient(135deg, #0558a8 0%, #0970d4 100%);
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(9,112,212,0.3);
+  }
+  .btn-primary:hover {
+    box-shadow: 0 4px 24px rgba(9,112,212,0.5);
+    transform: translateY(-1px);
+  }
+  .btn-primary:active { transform: translateY(0); }
+
+  /* Teal outline button */
+  .btn-outline {
+    @apply px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200;
+    border: 1px solid var(--teal);
+    color: var(--teal);
+    background: transparent;
+  }
+  .btn-outline:hover {
+    background: rgba(6,182,212,0.1);
+    box-shadow: 0 0 16px var(--teal-glow);
+  }
+
+  /* Input field */
+  .cs-input {
+    @apply w-full rounded-xl px-4 py-3 text-sm outline-none transition-all duration-200;
+    background: rgba(1, 26, 66, 0.8);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+  }
+  .cs-input::placeholder { color: var(--text-muted); }
+  .cs-input:focus {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(6,182,212,0.1);
+  }
+
+  /* Risk badge */
+  .risk-badge {
+    @apply inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider;
+  }
+  .risk-low    { background: rgba(34,197,94,0.15);  color: #22c55e; border: 1px solid rgba(34,197,94,0.3); }
+  .risk-medium { background: rgba(245,158,11,0.15); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); }
+  .risk-high   { background: rgba(239,68,68,0.15);  color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
+
+  /* Sidebar nav link */
+  .nav-link {
+    @apply flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200;
+    color: var(--text-muted);
+  }
+  .nav-link:hover { background: rgba(6,182,212,0.08); color: var(--text-primary); }
+  .nav-link.active {
+    background: rgba(6,182,212,0.12);
+    color: var(--teal);
+    border: 1px solid rgba(6,182,212,0.2);
+  }
+
+  /* Section header */
+  .section-title {
+    @apply text-2xl font-bold tracking-tight;
+    background: linear-gradient(90deg, #f0f9ff 0%, #22d3ee 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Metric card */
+  .metric-card {
+    @apply glass-card p-6 flex flex-col gap-2;
+  }
+  .metric-value { @apply text-3xl font-bold; }
+  .metric-label { @apply text-xs font-medium uppercase tracking-widest; color: var(--text-muted); }
+}
+
+/* ── Scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(6,182,212,0.3); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(6,182,212,0.6); }
+
+/* ── Animations ──────────────────────────────────────────── */
+@keyframes risk-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+.animate-risk-pulse { animation: risk-pulse 2s ease-in-out infinite; }
